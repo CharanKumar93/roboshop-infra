@@ -23,6 +23,6 @@ module "subnets" {
   nat_gw          = lookup(each.value,"nat_gw", false)
 }
 
-output "vpc_id" {
+output "subnet_ids" {
   value = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
 }
