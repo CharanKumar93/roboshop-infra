@@ -24,5 +24,5 @@ module "subnets" {
 }
 
 output "subnet_ids" {
-  value = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
+  value = module.subnets
 }
