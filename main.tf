@@ -8,11 +8,9 @@ module "vpc" {
 }
 
 //module "subnets" {
-//  source = "github.com/CharanKumar93/tf-module-vpc"
+//  source = "github.com/CharanKumar93/tf-module-subnets"
 //  env = var.env
 //  default_vpc_id = var.default_vpc_id
-//
-//  vpc_id = module.vpc.vpc_id
 //
 //  for_each = var.subnets
 //  cidr_block = each.value.cidr_block
@@ -21,5 +19,5 @@ module "vpc" {
 //}
 
 output "vpc_id" {
-  value = module.vpc
+  value = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
 }
