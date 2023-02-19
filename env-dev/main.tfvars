@@ -30,4 +30,7 @@ vpc = {
         nat_gw     = true
       }
     }
+
+   }
   }
+}
