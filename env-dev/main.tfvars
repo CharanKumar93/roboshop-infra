@@ -3,16 +3,16 @@ default_vpc_id = "vpc-0c4ebcae138ee0ff5"
 
 vpc = {
   main = {
-    cidr_block = "10.0.0.0/16"
+    cidr_block        = "10.0.0.0/16"
     availability_zone = ["us-east-1a", "us-east-1b"]
-     public_subnets = {
-       public = {
+    public_subnets = {
+      public = {
         name        = "public"
         cidr_block  = ["10.0.0.0/24", "10.0.1.0/24"]
         internet_gw = true
       }
     }
-     public_subnets = {
+    private_subnets = {
       web = {
         name       = "web"
         cidr_block = ["10.0.2.0/24", "10.0.3.0/24"]
@@ -30,5 +30,15 @@ vpc = {
       }
     }
 
-   }
   }
+}
+
+docdb = {
+  main = {
+    vpc_name            = "main"
+    subnets_name        = "db"
+    engine_version      = "4.0.0"
+    number_of_instances = 1
+    instance_class      = "db.t3.medium"
+  }
+}
