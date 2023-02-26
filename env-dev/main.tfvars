@@ -57,11 +57,11 @@ rds = {
 
 elasticache = {
   main = {
-    vpc_name                = "main"
-    subnets_name            = "db"
-    num_node_groups         = 2
-    replicas_per_node_group = 1
-    node_type               = "cache.t3.micro"
+    vpc_name        = "main"
+    subnets_name    = "db"
+    num_cache_nodes = 1
+    node_type       = "cache.t3.micro"
+    engine_version  = "6.x"
   }
 }
 
@@ -108,6 +108,58 @@ apps = {
   }
   catalogue = {
     component               = "catalogue"
+    vpc_name                = "main"
+    subnets_type            = "private_subnet_ids"
+    subnets_name            = "app"
+    app_port                = 8080
+    allow_cidr_subnets_type = "private_subnets"
+    allow_cidr_subnets_name = "app"
+    max_size                = 2
+    min_size                = 1
+    desired_capacity        = 1
+    instance_type           = "t3.micro"
+  }
+  user = {
+    component               = "user"
+    vpc_name                = "main"
+    subnets_type            = "private_subnet_ids"
+    subnets_name            = "app"
+    app_port                = 8080
+    allow_cidr_subnets_type = "private_subnets"
+    allow_cidr_subnets_name = "app"
+    max_size                = 2
+    min_size                = 1
+    desired_capacity        = 1
+    instance_type           = "t3.micro"
+  }
+  cart = {
+    component               = "cart"
+    vpc_name                = "main"
+    subnets_type            = "private_subnet_ids"
+    subnets_name            = "app"
+    app_port                = 8080
+    allow_cidr_subnets_type = "private_subnets"
+    allow_cidr_subnets_name = "app"
+    max_size                = 2
+    min_size                = 1
+    desired_capacity        = 1
+    instance_type           = "t3.micro"
+  }
+  shipping = {
+    component               = "shipping"
+    vpc_name                = "main"
+    subnets_type            = "private_subnet_ids"
+    subnets_name            = "app"
+    app_port                = 8080
+    allow_cidr_subnets_type = "private_subnets"
+    allow_cidr_subnets_name = "app"
+    max_size                = 2
+    min_size                = 1
+    desired_capacity        = 1
+    instance_type           = "t3.micro"
+  }
+  payment = {
+    component               = "payment"
     vpc_name                = "main"
     subnets_type            = "private_subnet_ids"
     subnets_name            = "app"
