@@ -3,7 +3,7 @@ module "vpc" {
   env            = var.env
   default_vpc_id = var.default_vpc_id
 
-  for_each          = var.vpc
+for_each          = var.vpc
   cidr_block        = each.value.cidr_block
   public_subnets    = each.value.public_subnets
   private_subnets   = each.value.private_subnets
@@ -74,7 +74,7 @@ module "alb" {
   for_each     = var.alb
   subnet_ids   = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), each.value.subnets_type, null), each.value.subnets_name, null), "subnet_ids", null)
   vpc_id       = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
-  allow_cidr   = each.value.internal ? lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "web", null), "cidr_block", null) : ["0.0.0.0/0"]
+  allow_cidr   = each.value.internal ? concat(lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "web", null), "cidr_block", null), lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)) : ["0.0.0.0/0"]
   subnets_name = each.value.subnets_name
   internal     = each.value.internal
 }
@@ -98,8 +98,10 @@ module "apps" {
   min_size          = each.value.min_size
   desired_capacity  = each.value.desired_capacity
   instance_type     = each.value.instance_type
-  bastion_cidr      = var.bastion_cidr
   listener_priority = each.value.listener_priority
+
+  bastion_cidr = var.bastion_cidr
+  monitor_cidr = var.monitor_cidr
 
 }
 
